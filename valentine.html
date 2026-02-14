@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For My Valentine ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Baloo 2', cursive;
+    background: url('https://images.unsplash.com/photo-1518199266791-5375a83190b7') no-repeat center center/cover;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #222;
+}
+
+/* Blur overlay */
+body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(12px);
+    background: rgba(255,255,255,0.4);
+    z-index: 0;
+}
+
+.container {
+    text-align: center;
+    z-index: 10;
+    position: relative;
+}
+
+/* Cute Image Card */
+.card {
+    background: white;
+    padding: 15px;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    display: inline-block;
+}
+
+.card img {
+    width: 230px;
+    border-radius: 12px;
+}
+
+h1 {
+    font-size: 55px;
+    margin: 20px 0;
+}
+
+/* Buttons */
+button {
+    padding: 10px 25px;
+    font-size: 18px;
+    border-radius: 8px;
+    border: none;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.yes {
+    background: #22c55e;
+    color: white;
+}
+
+.no {
+    background: #ef4444;
+    color: white;
+    position: absolute;
+}
+
+button:hover {
+    transform: scale(1.1);
+}
+
+.hidden {
+    display: none;
+}
+
+/* Love Stickers */
+.sticker1 {
+    position: absolute;
+    top: 20px;
+    left: 40px;
+    font-size: 25px;
+    color: #ff4d6d;
+    opacity: 0.7;
+}
+
+.sticker2 {
+    position: absolute;
+    bottom: 30px;
+    right: 40px;
+    font-size: 25px;
+    color: #ff4d6d;
+    opacity: 0.7;
+}
+
+/* Gallery */
+.gallery {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(2, 170px);
+    gap: 20px;
+    justify-content: center;
+}
+
+.gallery img {
+    width: 170px;
+    height: 170px;
+    border-radius: 20px;
+    object-fit: cover;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    transition: 0.4s;
+}
+
+.gallery img:hover {
+    transform: scale(1.1);
+}
+
+/* Floating Hearts */
+.heart {
+    position: absolute;
+    bottom: -10px;
+    color: pink;
+    font-size: 20px;
+    animation: floatUp 6s linear infinite;
+}
+
+@keyframes floatUp {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-100vh); opacity: 0; }
+}
+
+/* Confetti */
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    top: 0;
+    animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+    to {
+        transform: translateY(100vh) rotate(720deg);
+        opacity: 0;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="sticker1">All You Need is Love 💖</div>
+<div class="sticker2">Love is in the Air 💕</div>
+
+<div class="container" id="main">
+
+    <div class="card">
+        <img src="bear.gif" alt="Cute Bear">
+    </div>
+
+    <h1>Will You Be My Valentine? 💖</h1>
+
+    <button class="yes" onclick="yesClicked()">Yes 💕</button>
+    <button class="no" id="noBtn">No 😢</button>
+
+</div>
+
+<div class="container hidden" id="lovePage">
+    <h1>I Love You So Much 💞</h1>
+    <p>You are the most beautiful part of my life ❤️</p>
+
+    <div class="gallery">
+        <img src="photo1.jpg">
+        <img src="photo2.jpg">
+        <img src="photo3.jpg">
+        <img src="photo4.jpg">
+    </div>
+</div>
+
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<script>
+const noBtn = document.getElementById("noBtn");
+
+noBtn.addEventListener("mouseover", function () {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+});
+
+function yesClicked() {
+    document.getElementById("main").classList.add("hidden");
+    document.getElementById("lovePage").classList.remove("hidden");
+    document.getElementById("bgMusic").play();
+    createConfetti();
+}
+
+function createConfetti() {
+    for (let i = 0; i < 100; i++) {
+        let confetti = document.createElement("div");
+        confetti.classList.add("confetti");
+        confetti.style.left = Math.random() * window.innerWidth + "px";
+        confetti.style.background = `hsl(${Math.random()*360},100%,50%)`;
+        confetti.style.animationDuration = Math.random()*3 + 2 + "s";
+        document.body.appendChild(confetti);
+        setTimeout(() => confetti.remove(), 4000);
+    }
+}
+
+/* Floating Hearts */
+setInterval(() => {
+    let heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.fontSize = Math.random()*20 + 15 + "px";
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+}, 300);
+</script>
+
+</body>
+</html>
